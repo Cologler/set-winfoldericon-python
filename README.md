@@ -1,2 +1,3 @@
-# set-winfoldericon-python
- API for set folder icon for windows
+# set-winfoldericon for Windows
+
+Library for set folder icon on windows.

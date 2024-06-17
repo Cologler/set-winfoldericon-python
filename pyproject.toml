@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "set-winfoldericon"
+version = "0.1.0"
+description = ""
+authors = ["Cologler <skyoflw@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pywin32 = "^306"
+pillow = "^10.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
