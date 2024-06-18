@@ -66,7 +66,19 @@ def convert_ico(src: str, dst: str, *, to_square: bool = False):
     img.save(dst, bitmap_format="bmp", sizes=sizes)
 
 
-def set_foldericon(folder_path: str, icon_path: str, *, nofify_shell: bool = True):
+def notify_shell():
+    '''
+    A helper function for notify windows shell refresh icon.
+    '''
+    # see https://learn.microsoft.com/zh-cn/windows/win32/api/shlobj_core/nf-shlobj_core-shchangenotify
+    # alsosee https://github.com/demberto/FolderIkon/blob/master/folderikon/notify_shell.py
+    SHCNE_ASSOCCHANGED = 0x08000000
+    SHCNF_IDLIST = 0x0000
+    ctypes.windll.shell32.SHChangeNotify(
+        SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
+
+
+def set_foldericon(folder_path: str, icon_path: str, *, notify_shell: bool = True):
     # step1: create ini
     inipath = os.path.join(folder_path, 'desktop.ini')
     if not os.path.exists(inipath):
@@ -84,17 +96,13 @@ def set_foldericon(folder_path: str, icon_path: str, *, nofify_shell: bool = Tru
     set_file_attributes(folder_path, system=True)
 
     # step3: notify shell
-    # see https://learn.microsoft.com/zh-cn/windows/win32/api/shlobj_core/nf-shlobj_core-shchangenotify
-    # alsosee https://github.com/demberto/FolderIkon/blob/master/folderikon/notify_shell.py
-    if nofify_shell:
-        SHCNE_ASSOCCHANGED = 0x08000000
-        SHCNF_IDLIST = 0x0000
-        ctypes.windll.shell32.SHChangeNotify(
-            SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
+    if notify_shell:
+        notify_shell()
 
 
 __all__ = [
     'set_foldericon',
     'convert_ico',
-    'set_file_attributes', # allows user to change the icon file attributes
+    'set_file_attributes', # allows user to change the icon file attributes,
+    'notify_shell',
 ]
