@@ -77,6 +77,7 @@ def notify_shell():
     ctypes.windll.shell32.SHChangeNotify(
         SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0)
 
+_notify_shell_fn = notify_shell
 
 def set_foldericon(folder_path: str, icon_path: str, *, notify_shell: bool = True):
     # step1: create ini
@@ -97,7 +98,7 @@ def set_foldericon(folder_path: str, icon_path: str, *, notify_shell: bool = Tru
 
     # step3: notify shell
     if notify_shell:
-        notify_shell()
+        _notify_shell_fn()
 
 
 __all__ = [
