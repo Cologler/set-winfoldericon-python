@@ -8,8 +8,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-pywin32 = "^310"
 pillow = "^10.3.0"
+pywin32 = "^311"
 
 
 
